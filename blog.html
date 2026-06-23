@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanvi · Blog · Studio</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* ----- RESET & BASE (matches existing style) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: #111827;
+      color: white;
+    }
+
+    /* ----- NAVBAR (exactly as index & about) ----- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      position: sticky;
+      top: 0;
+      background: #111827;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .logo span {
+      color: gold;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    nav ul li a:hover {
+      color: #ffd966;
+    }
+    .active {
+      background: gold;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: black !important;
+    }
+    .active:hover {
+      background: #e6c200 !important;
+      color: black !important;
+    }
+
+    /* ----- BLOG HEADER ----- */
+    .blog-header {
+      padding: 40px 8% 20px;
+    }
+    .blog-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .blog-header h1 i {
+      color: #fbbf24;
+      margin-right: 12px;
+    }
+    .blog-header .sub {
+      color: #9ca3af;
+      font-size: 1.1rem;
+      margin-top: 6px;
+      border-left: 4px solid #fbbf24;
+      padding-left: 18px;
+      max-width: 700px;
+    }
+
+    /* ----- BOARDING PASS / STATUS (from first image) ----- */
+    .boarding-status {
+      padding: 10px 8% 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 40px;
+      align-items: center;
+      background: #1a1f2e;
+      border-radius: 28px;
+      margin: 0 8% 20px;
+      padding: 18px 30px;
+      border: 1px solid #374151;
+    }
+    .boarding-status .item {
+      display: flex;
+      flex-direction: column;
+    }
+    .boarding-status .item .label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: #9ca3af;
+      letter-spacing: 0.5px;
+    }
+    .boarding-status .item .value {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #e5e7eb;
+    }
+    .boarding-status .item .value i {
+      color: #fbbf24;
+      margin-right: 6px;
+    }
+    .boarding-status .divider {
+      width: 1px;
+      height: 30px;
+      background: #374151;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 6px;
+      box-shadow: 0 0 12px #4ade80;
+    }
+
+    /* ----- BLOG POSTS GRID ----- */
+    .blog-grid {
+      padding: 10px 8% 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .blog-post {
+      background: #1f2937;
+      border-radius: 28px;
+      padding: 28px 26px;
+      border: 1px solid #374151;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-post:hover {
+      border-color: #fbbf24;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+    .blog-post .post-meta {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fbbf24;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .blog-post .post-meta .read-time {
+      color: #9ca3af;
+      font-weight: 400;
+    }
+    .blog-post .post-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .blog-post .post-excerpt {
+      color: #9ca3af;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .blog-post .post-tag {
+      display: inline-block;
+      background: #2a3344;
+      padding: 3px 14px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      color: #cbd5e1;
+      margin-top: 14px;
+      align-self: flex-start;
+    }
+    .blog-post .post-tag i {
+      margin-right: 4px;
+      color: #fbbf24;
+    }
+
+    /* Featured / larger post */
+    .blog-post.featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(145deg, #1f2937, #1a2332);
+      border-color: #fbbf24;
+      border-width: 2px;
+      padding: 32px 30px;
+    }
+    .blog-post.featured .post-title {
+      font-size: 1.8rem;
+    }
+    .blog-post.featured .post-excerpt {
+      font-size: 1rem;
+    }
+
+    /* ----- SITE MAP + SCAN (from images) ----- */
+    .site-map-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8% 15px;
+      border-top: 1px solid #374151;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 10px;
+    }
+    .site-map-row .map-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+    }
+    .site-map-row .map-links span {
+      cursor: default;
+    }
+    .site-map-row .map-links i {
+      margin-right: 4px;
+      color: #fbbf24;
+    }
+    .scan-box {
+      background: #1f2937;
+      padding: 6px 20px;
+      border-radius: 60px;
+      border: 1px solid #4b5563;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #e5e7eb;
+    }
+    .scan-box i {
+      color: #fbbf24;
+      font-size: 1.1rem;
+    }
+
+    /* ----- FOOTER (matches) ----- */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0b0f17;
+      margin-top: 20px;
+      border-top: 1px solid #1f2937;
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
+    /* ----- WINDOWS ACTIVATE ----- */
+    .win-activate {
+      padding: 8px 8% 0;
+      display: flex;
+      justify-content: flex-end;
+      font-size: 0.7rem;
+      color: #6b7280;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .win-activate i {
+      margin-right: 4px;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 900px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+      .blog-post.featured {
+        grid-column: 1;
+      }
+    }
+    @media (max-width: 768px) {
+      .blog-header h1 {
+        font-size: 2.2rem;
+      }
+      .boarding-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 16px 20px;
+      }
+      .boarding-status .divider {
+        display: none;
+      }
+      .site-map-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      nav ul {
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .blog-post.featured .post-title {
+        font-size: 1.4rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .blog-header h1 {
+        font-size: 1.8rem;
+      }
+      .blog-post {
+        padding: 20px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== NAVBAR (with "Blog" active) ====== -->
+<header>
+  <div class="logo">Tanvi<span>.</span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contact.html">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ====== BLOG HEADER ====== -->
+<div class="blog-header">
+  <h1><i class="fas fa-pen-fancy"></i> Notes from the desk.</h1>
+  <div class="sub">Long-form essays on the craft of web design, the politics of frameworks, and the strange business of selling pixels for a living.</div>
+</div>
+
+<!-- ====== BOARDING PASS / STATUS (from first image) ====== -->
+<div class="boarding-status">
+  <div class="item">
+    <span class="label"><i class="fas fa-user"></i> PASSENGER</span>
+    <span class="value">Future Client</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-plane"></i> FLIGHT</span>
+    <span class="value">AM 2026</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-ticket-alt"></i> BOARDING</span>
+    <span class="value">NOW</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-calendar"></i> PROJECT KICKOFF</span>
+    <span class="value">21 JUN 2026</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label">STATUS</span>
+    <span class="value"><span class="status-dot"></span> OPEN</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-chair"></i> SEAT</span>
+    <span class="value">12A</span>
+  </div>
+</div>
+
+<!-- ====== BLOG POSTS ====== -->
+<div class="blog-grid">
+
+  <!-- Featured Post -->
+  <div class="blog-post featured">
+    <div class="post-meta">
+      <span>JUN 2026</span>
+      <span class="read-time"><i class="far fa-clock"></i> 7 MIN READ</span>
+    </div>
+    <div class="post-title">Why I quit React for client work</div>
+    <div class="post-excerpt">After five years and 30 projects, the cost-benefit stopped adding up. Here's why I moved back to vanilla + lightweight tools — and how it changed my business.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> Frameworks</span>
+  </div>
+
+  <!-- Post 2 -->
+  <div class="blog-post">
+    <div class="post-meta">
+      <span>MAY 2026</span>
+      <span class="read-time"><i class="far fa-clock"></i> 4 MIN READ</span>
+    </div>
+    <div class="post-title">The 200ms rule for motion</div>
+    <div class="post-excerpt">How a single timing constraint made my interfaces feel cohesive — and why every animation should have a maximum duration.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> Motion</span>
+  </div>
+
+  <!-- Post 3 -->
+  <div class="blog-post">
+    <div class="post-meta">
+      <span>APR 2026</span>
+      <span class="read-time"><i class="far fa-clock"></i> 9 MIN READ</span>
+    </div>
+    <div class="post-title">I tripled my rates. Here is what happened.</div>
+    <div class="post-excerpt">The first six months of value-based pricing, with the spreadsheets. A breakdown of the math, the psychology, and the clients who said yes.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> Business</span>
+  </div>
+
+  <!-- Post 4 -->
+  <div class="blog-post">
+    <div class="post-meta">
+      <span>MAR 2026</span>
+      <span class="read-time"><i class="far fa-clock"></i> 6 MIN READ</span>
+    </div>
+    <div class="post-title">GEO + SEO: getting found locally</div>
+    <div class="post-excerpt">The 8 meta tags every freelancer should ship on day one — and why location targeting is the underrated growth lever.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> SEO</span>
+  </div>
+
+  <!-- Post 5 -->
+  <div class="blog-post">
+    <div class="post-meta">
+      <span>FEB 2026</span>
+      <span class="read-time"><i class="far fa-clock"></i> 5 MIN READ</span>
+    </div>
+    <div class="post-title">A 99 Lighthouse score, every time</div>
+    <div class="post-excerpt">The boring checklist I run before every client launch — and why performance is a feature, not a nice-to-have.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> Performance</span>
+  </div>
+
+  <!-- Post 6 -->
+  <div class="blog-post">
+    <div class="post-meta">
+      <span>JAN 2026</span>
+      <span class="read-time"><i class="fas fa-video"></i> WATCH</span>
+    </div>
+    <div class="post-title">Talk: Motion as a UX primitive</div>
+    <div class="post-excerpt">My 22-minute keynote from Frontend Conf Bengaluru 2024 — why motion is not decoration, but a core interaction model.</div>
+    <span class="post-tag"><i class="fas fa-tag"></i> Speaking</span>
+  </div>
+
+</div>
+
+<!-- ====== SITE MAP + SCAN TO BOARD ====== -->
+<div class="site-map-row">
+  <div class="map-links">
+    <span><i class="fas fa-sitemap"></i> SITE MAP</span>
+    <span>• Home</span>
+    <span>• About</span>
+    <span>• Services</span>
+    <span>• Portfolio</span>
+    <span>• Resume</span>
+    <span>• Blog</span>
+    <span>• Hire me</span>
+  </div>
+  <div class="scan-box">
+    <i class="fas fa-qrcode"></i>
+    <span>SCAN TO BOARD</span>
+    <i class="fas fa-chevron-right" style="font-size:0.7rem;"></i>
+  </div>
+</div>
+
+<!-- ====== WINDOWS ACTIVATE (stylized) ====== -->
+<div class="win-activate">
+  <span><i class="fas fa-windows"></i> Activate Windows</span>
+  <span><i class="fas fa-envelope"></i> Go to Settings to activate Windows.</span>
+  <span><i class="fas fa-laptop"></i> DELL</span>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <p>© 2026 Tanvi Pawar · Pune, India</p>
+</footer>
+
+<!-- ====== SCRIPT ====== -->
+<script>
+  (function() {
+    console.log('✧ Tanvi · Blog page loaded ✧');
+    let counters = document.querySelectorAll(".card h2");
+    counters.forEach(counter => {
+      let target = parseInt(counter.innerText);
+      let count = 0;
+      let interval = setInterval(() => {
+        count++;
+        counter.innerText = count + "+";
+        if (count >= target) clearInterval(interval);
+      }, 50);
+    });
+  })();
+</script>
+
+</body>
+</html>
