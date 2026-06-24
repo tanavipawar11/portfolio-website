@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanvi · Services · Studio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: #111827; color: white; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      position: sticky;
+      top: 0;
+      background: #111827;
+      z-index: 100;
+    }
+    .logo { font-size: 28px; font-weight: bold; }
+    .logo span { color: gold; }
+    nav ul { display: flex; list-style: none; gap: 25px; }
+    nav ul li a { text-decoration: none; color: white; font-weight: 500; transition: 0.2s; }
+    nav ul li a:hover { color: #ffd966; }
+    .active { background: gold; padding: 10px 20px; border-radius: 20px; color: black !important; }
+    .active:hover { background: #e6c200 !important; color: black !important; }
+
+    .services-header { padding: 40px 8% 20px; }
+    .services-header h1 { font-size: 3rem; font-weight: 700; letter-spacing: -0.5px; }
+    .services-header h1 i { color: #fbbf24; margin-right: 12px; }
+    .services-header .sub { color: #9ca3af; font-size: 1.1rem; margin-top: 6px; border-left: 4px solid #fbbf24; padding-left: 18px; max-width: 700px; }
+
+    .process-timeline { padding: 20px 8% 30px; }
+    .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: #1f2937; padding: 30px 25px; border-radius: 28px; border: 1px solid #374151; }
+    .process-step { display: flex; flex-direction: column; border-left: 3px solid #fbbf24; padding-left: 16px; }
+    .process-step .day { font-size: 0.8rem; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; text-transform: uppercase; }
+    .process-step h4 { font-size: 1.1rem; font-weight: 600; margin: 4px 0 6px; }
+    .process-step p { color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; }
+
+    .services-cards { padding: 20px 8% 30px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .service-card { background: #1f2937; border-radius: 28px; padding: 28px 24px; border: 1px solid #374151; transition: 0.2s; display: flex; flex-direction: column; }
+    .service-card:hover { border-color: #fbbf24; transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    .service-card .price { font-size: 2.2rem; font-weight: 700; color: #fbbf24; margin: 8px 0 4px; }
+    .service-card .price span { font-size: 1rem; font-weight: 400; color: #9ca3af; }
+    .service-card .card-title { font-size: 1.4rem; font-weight: 600; }
+    .service-card .card-desc { color: #d1d5db; font-size: 0.95rem; line-height: 1.6; margin: 8px 0 16px; flex: 1; }
+    .service-card .feature-list { list-style: none; margin: 12px 0 20px; }
+    .service-card .feature-list li { color: #cbd5e1; font-size: 0.9rem; padding: 4px 0; display: flex; align-items: center; gap: 10px; }
+    .service-card .feature-list li i { color: #fbbf24; width: 18px; font-size: 0.8rem; }
+    .service-card .badge { display: inline-block; background: #fbbf24; color: #111827; font-size: 0.7rem; font-weight: 700; padding: 4px 14px; border-radius: 30px; letter-spacing: 0.5px; align-self: flex-start; margin-bottom: 8px; }
+    .btn-service { background: transparent; border: 1px solid #4b5563; padding: 10px 20px; border-radius: 40px; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none; display: inline-block; margin-top: 8px; font-size: 0.9rem; }
+    .btn-service:hover { background: #fbbf24; color: #111827; border-color: #fbbf24; }
+    .btn-service.primary { background: #fbbf24; color: #111827; border: none; }
+    .btn-service.primary:hover { background: #f59e0b; }
+
+    .boarding-status { padding: 10px 8% 20px; display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; background: #1a1f2e; border-radius: 28px; margin: 0 8% 20px; padding: 18px 30px; border: 1px solid #374151; }
+    .boarding-status .item { display: flex; flex-direction: column; }
+    .boarding-status .item .label { font-size: 0.65rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.5px; }
+    .boarding-status .item .value { font-weight: 600; font-size: 1rem; color: #e5e7eb; }
+    .boarding-status .item .value i { color: #fbbf24; margin-right: 6px; }
+    .boarding-status .divider { width: 1px; height: 30px; background: #374151; }
+    .status-dot { display: inline-block; width: 10px; height: 10px; background: #4ade80; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 12px #4ade80; }
+
+    /* NEW UNIQUE FOOTER */
+    .footer-new {
+      background: linear-gradient(180deg, #0b0f17 0%, #0a0e15 100%);
+      border-top: 1px solid #1f2937;
+      padding: 50px 8% 20px;
+      margin-top: 20px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
+    .footer-brand h3 span { color: gold; }
+    .footer-brand p { color: #9ca3af; line-height: 1.7; max-width: 300px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+    .footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #1f2937; color: #d1d5db; transition: 0.3s; text-decoration: none; }
+    .footer-social a:hover { background: gold; color: #111827; transform: translateY(-3px); }
+    .footer-col h4 { color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: #9ca3af; text-decoration: none; transition: 0.3s; }
+    .footer-col ul li a:hover { color: gold; padding-left: 6px; }
+    .footer-col .contact-info { color: #9ca3af; line-height: 2; }
+    .footer-col .contact-info i { color: gold; width: 24px; }
+    .footer-bottom { border-top: 1px solid #1f2937; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: #6b7280; font-size: 0.9rem; }
+    .footer-bottom .scroll-top { background: #1f2937; color: #d1d5db; border: none; padding: 10px 20px; border-radius: 40px; cursor: pointer; transition: 0.3s; }
+    .footer-bottom .scroll-top:hover { background: gold; color: #111827; }
+
+    /* Updated footer social icons - removed Twitter, YouTube, Instagram, added Gmail */
+    .footer-social a .fa-linkedin-in { color: #0a66c2; }
+    .footer-social a .fa-github { color: #fff; }
+    .footer-social a .fa-envelope { color: #ea4335; }
+
+    @media (max-width: 768px) {
+      .services-header h1 { font-size: 2.2rem; }
+      .process-grid { grid-template-columns: 1fr 1fr; padding: 20px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .boarding-status { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .boarding-status .divider { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      nav ul { gap: 12px; flex-wrap: wrap; }
+      header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Tanvi<span>.</span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="contact.html">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="services-header">
+  <h1><i class="fas fa-briefcase"></i> SERVICES</h1>
+  <div class="sub">Pick a lane. I'll handle the rest. Three packages, fixed price, no surprises. Every package includes mobile design, basic SEO, and 30 days of post-launch support.</div>
+</div>
+
+<div class="boarding-status">
+  <div class="item">
+    <span class="label"><i class="fas fa-user"></i> PASSENGER</span>
+    <span class="value">Future Client</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-plane"></i> FLIGHT</span>
+    <span class="value">AM 2026</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-ticket-alt"></i> BOARDING PASS</span>
+    <span class="value">CLASS A</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-calendar"></i> PROJECT KICKOFF</span>
+    <span class="value">21 JUN 2026</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label">STATUS</span>
+    <span class="value"><span class="status-dot"></span> OPEN</span>
+  </div>
+  <div class="divider"></div>
+  <div class="item">
+    <span class="label"><i class="fas fa-chair"></i> SEAT</span>
+    <span class="value">12A · BIZCODE</span>
+  </div>
+</div>
+
+<section class="process-timeline">
+  <div style="margin-bottom:16px;">
+    <h2 style="font-size:1.8rem; font-weight:700;"><i class="fas fa-road" style="color:#fbbf24; margin-right:10px;"></i> A process built for clarity.</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <span class="day">DAY 1</span>
+      <h4>Kickoff call</h4>
+      <p>We define success metrics and lock the scope.</p>
+    </div>
+    <div class="process-step">
+      <span class="day">DAY 2-3</span>
+      <h4>Wireframes</h4>
+      <p>Low-fi structure first — we agree on flow before pixels.</p>
+    </div>
+    <div class="process-step">
+      <span class="day">DAY 4-8</span>
+      <h4>Design + build in parallel</h4>
+      <p>Daily previews. You watch the site appear.</p>
+    </div>
+    <div class="process-step">
+      <span class="day">DAY 9-10</span>
+      <h4>QA + launch</h4>
+      <p>Lighthouse, accessibility, cross-browser. Then we go live.</p>
+    </div>
+  </div>
+</section>
+
+<section class="services-cards">
+  <div class="cards-grid">
+    <!-- Landing Page - Enquire button opens Gmail -->
+    <div class="service-card">
+      <div class="card-title">Landing page</div>
+      <div class="price">$750 <span>/ one-page</span></div>
+      <div class="card-desc">One-page, conversion-optimised, ready in 7 days.</div>
+      <ul class="feature-list">
+        <li><i class="fas fa-check"></i> 5 unique sections</li>
+        <li><i class="fas fa-check"></i> 1 round of revisions</li>
+        <li><i class="fas fa-check"></i> Mobile-first design</li>
+        <li><i class="fas fa-check"></i> Basic GEO/SEO setup</li>
+        <li><i class="fas fa-check"></i> Contact form + PDF lead capture</li>
+      </ul>
+      <!-- Enquire button - opens Gmail -->
+      <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="btn-service">Enquire <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Full Website - Book a call button opens contact.html -->
+    <div class="service-card" style="border-color:#fbbf24; box-shadow:0 0 30px rgba(251,191,36,0.08);">
+      <span class="badge"><i class="fas fa-star"></i> MOST PICKED</span>
+      <div class="card-title">Full website</div>
+      <div class="price">$2,400 <span>/ 5-8 pages</span></div>
+      <div class="card-desc">5-8 pages with custom animation and CMS-ready structure.</div>
+      <ul class="feature-list">
+        <li><i class="fas fa-check"></i> Up to 8 unique pages</li>
+        <li><i class="fas fa-check"></i> 3 rounds of revisions</li>
+        <li><i class="fas fa-check"></i> Custom animations</li>
+        <li><i class="fas fa-check"></i> Advanced SEO + JSON-LD</li>
+        <li><i class="fas fa-check"></i> PDF enquiry + email lead routing</li>
+        <li><i class="fas fa-check"></i> 60-day post-launch support</li>
+      </ul>
+      <!-- Book a call button - opens contact.html -->
+      <a href="contact.html" class="btn-service primary">Book a call <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Retainer - Let's talk button opens WhatsApp -->
+    <div class="service-card">
+      <div class="card-title">Retainer</div>
+      <div class="price">$1,200 <span>/ month</span></div>
+      <div class="card-desc">Ongoing improvements, A/B tests, and content updates.</div>
+      <ul class="feature-list">
+        <li><i class="fas fa-check"></i> 20 hours / month</li>
+        <li><i class="fas fa-check"></i> Friday Loom updates</li>
+        <li><i class="fas fa-check"></i> Performance audits monthly</li>
+        <li><i class="fas fa-check"></i> Priority Slack channel</li>
+        <li><i class="fas fa-check"></i> Cancel anytime</li>
+      </ul>
+      <!-- Let's talk button - opens WhatsApp Web -->
+      <a href="https://web.whatsapp.com" target="_blank" class="btn-service">Let's talk <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- NEW UNIQUE FOOTER -->
+<footer class="footer-new">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Tanvi<span>.</span></h3>
+      <p>Web Developer &amp; Designer. Creating digital experiences that matter.</p>
+      <div class="footer-social">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/tanvi-pawar-0872b03a2?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <!-- GitHub -->
+        <a href="https://github.com/tanavipawar11/ti-o" target="_blank" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <!-- Gmail -->
+        <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" title="Gmail">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="services.html">Services</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Hire Me</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="contact-info">
+        <div><i class="fas fa-map-marker-alt"></i> Pune, India</div>
+        <div><i class="fas fa-envelope"></i> tanvi@example.com</div>
+        <div><i class="fas fa-phone"></i> +91 98765 43210</div>
+        <div><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Tanvi Pawar · Crafted with <i class="fas fa-heart" style="color: gold;"></i> in Pune</p>
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <i class="fas fa-arrow-up"></i> Back to Top
+    </button>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    console.log('✧ Tanvi · Services page loaded ✧');
+    let counters = document.querySelectorAll(".card h2");
+    counters.forEach(counter => {
+      let target = parseInt(counter.innerText);
+      let count = 0;
+      let interval = setInterval(() => {
+        count++;
+        counter.innerText = count + "+";
+        if (count >= target) clearInterval(interval);
+      }, 50);
+    });
+  })();
+</script>
+
+</body>
+</html>
